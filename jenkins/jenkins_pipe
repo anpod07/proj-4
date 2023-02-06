@@ -1,7 +1,7 @@
 pipeline {
   agent {
-//    label 'master'
-    label 'docker-slave-1'
+    label 'master'
+//    label 'docker-slave-1'
   }
 
   options {
@@ -18,7 +18,7 @@ pipeline {
     }
     stage('GetCodeFromGitHub') {
       steps {
-        git branch: 'main', credentialsId: 'github-key', url: 'git@github.com:anpod07/proj-3.git'
+        git branch: 'main', credentialsId: 'github-key', url: 'git@github.com:anpod07/proj-4.git'
         sh '''
           pwd
           ls -la
@@ -37,24 +37,24 @@ pipeline {
     }
     stage('CreateDockerImage') {
       steps {
-        sh 'docker build -t anpod07/nginx-test:latest .'
+        sh 'docker build -t anpod07/proj-4-pyapp:latest .'
       }
     }
     stage('TestAndPushDockerImage') {
       steps {
         sh '''
-          docker run -d --rm --name nginx-test -p 80:80 anpod07/nginx-test:latest
+          docker run -d --rm --name py-test -p 8000:8000 anpod07/proj-4-pyapp:latest
           docker ps --no-trunc
           sleep 2
-          if [ -n `docker ps -q -f ancestor=anpod07/nginx-test` ]
+          if [ -n `docker ps -q -f ancestor=py-test` ]
            then
             echo 'HTTP HEALTH PASSED'
-            docker push anpod07/nginx-test:latest
+            docker push anpod07/proj-4-pyapp:latest
            else
             echo 'HTTP HEALTH FAILED'
           fi
-          docker stop nginx-test
-          docker rmi anpod07/nginx-test
+          docker stop py-test
+          docker rmi anpod07/proj-4-pyapp:latest
         '''
       }
     }

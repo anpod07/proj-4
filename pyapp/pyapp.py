@@ -21,8 +21,7 @@ app = Flask(__name__)
 # WORKED!!! But first install this:
 #  - sudo apt install libmysqlclient-dev -y
 #  - pip install mysqlclient (run this command in Virtual Enviroment 'venv')
-#app.config['SQLALCHEMY_DATABASE_URI'] = "mysql://admin:07secret07@rds-mysql.c2zjjwdqinpi.eu-central-1.rds.amazonaws.com:3306/db_test"
-app.config['SQLALCHEMY_DATABASE_URI'] = 
+app.config['SQLALCHEMY_DATABASE_URI'] = "mysql://admin:07secret07@rds-mysql.c2zjjwdqinpi.eu-central-1.rds.amazonaws.com:3306/db_test"
 session_options = {'autocommit': True}					# опция для автоматического сохранения БД (работало и без нее)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False	# отключаем неиспользуемые функции
 app.secret_key = "qwertyuiop"							# устанавливаем секретный ключ для использования сессионных ключей

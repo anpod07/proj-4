@@ -1,3 +1,5 @@
-FROM nginx:1.23.3-alpine
-ADD index.html /usr/share/nginx/html/
-CMD ["nginx","-g","daemon off;"]
+FROM anpod07/aws-pyapp:latest
+COPY ./pyapp /home/ninja/pyapp
+WORKDIR /home/ninja/pyapp/
+CMD ["/root/start.sh"]
+
